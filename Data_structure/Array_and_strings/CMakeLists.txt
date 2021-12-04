@@ -4,3 +4,5 @@ project(ArrayAndStrings)
 
 add_executable(hash_table hash_table.cpp)
 target_include_directories(hash_table PRIVATE ../Linked_lists)
+
+add_executable(is_unique is_unique.cpp)

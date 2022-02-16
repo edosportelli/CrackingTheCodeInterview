@@ -21,6 +21,8 @@ int partition(std::vector<int>& v, int l, int r)
     int p = v[p_i];
     l += 1;
 
+    std::cout << "called " << p_i << std::endl;
+
     while (l <= r)
     {
         while (v[l] < p && l <= r)
@@ -38,31 +40,26 @@ int partition(std::vector<int>& v, int l, int r)
     }
 
     swap(v[p_i], v[r]);
+
+    std::cout << "Ret " << r << std::endl;
     return r;
-}
-
-void quick_sort(std::vector<int>& v, int l, int r)
-{
-    if (r <= l)
-        return;
-
-    int p = partition(v, l, r);
-    quick_sort(v, l, p - 1);
-    quick_sort(v, p + 1, r);
 }
 
 int selection(std::vector<int>& v, int l, int r, int k)
 {
-    if (r <= l)
-        return 0;
-
     int p = partition(v, l, r);
+
+    for (auto& el : v)
+        std::cout << el << " ";
+
+    std::cout << std::endl;
 
     if (p == k)
         return v[p];
-
-    quick_sort(v, l, p - 1);
-    quick_sort(v, p + 1, r);
+    else if (p >= k)
+        selection(v, l, p - 1, k);
+    else 
+        selection(v, p + 1, r, k);
 }
 
 int main()
@@ -74,16 +71,13 @@ int main()
     std::mt19937 g(rd());
     std::shuffle(v.begin(), v.end(), g);
 
-    for (auto& el: v)
+    for (auto& el : v)
         std::cout << el << " ";
 
     std::cout << std::endl;
 
     // partition(v, 0, v.size() - 1);
-    quick_sort(v, 0, v.size() - 1);
+    int k = selection(v, 0, v.size() - 1, 13);
 
-    for (auto& el : v)
-        std::cout << el << " ";
-
-    std::cout << std::endl;
+    std::cout << k << std::endl;
 }
